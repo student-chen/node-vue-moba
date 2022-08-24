@@ -1,0 +1,287 @@
+// 重置样式,设置盒模型
+* {
+    box-sizing: border-box;
+    outline: none;
+}
+
+html {
+    font-size: 13px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.2em;
+    background: #f1f1f1;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: #666;
+}
+
+
+
+// 定义全局color
+$colors: (
+    primary: #db9e3f,
+    info: #4b67af,
+    "white": #fff,
+    light: #f9f9f9,
+    "light-1": #d4d9de,
+    "grey": #999,
+    "grey-1": #666,
+    dark: #222,
+    "black": #000,
+);
+
+// 处理边框
+$border-color: map-get($colors, "light-1");
+
+//生成color样式
+@each $colorKey,
+$color in $colors {
+
+    // 文字颜色
+    .text-#{$colorKey} {
+        color: $color;
+    }
+
+    // 背景颜色
+    .bg-#{$colorKey} {
+        background-color: $color;
+    }
+}
+
+// 处理文本字体位置
+@each $var in (left, center, right) {
+    .text-#{$var} {
+        text-align: $var  !important;
+    }
+}
+
+// 设置基础文字大小13px
+$base-font-size: 0.8125rem;
+
+//字体大小 分别是：8px 10px,12px,13px,14px,16px
+$font-sizes: (
+    xxs: 0.5rem,
+    xs: 0.625rem,
+    sm: 0.75rem,
+    md: 0.8125rem,
+    lg: 0.875rem,
+    xl: 1rem,
+);
+
+@each $sizeKey,
+$size in $font-sizes {
+    .fs-#{$sizeKey} {
+        font-size: $size;
+    }
+}
+
+// 定义全局flex
+.d-flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+$flex-jcs: (
+    start: flex-start,
+    end: flex-end,
+    center: center,
+    between: space-between,
+    around: space-around,
+);
+
+@each $key,
+$value in $flex-jcs {
+    .jc-#{$key} {
+        justify-content: $value;
+    }
+}
+
+$flex-ais: (
+    start: flex-start,
+    end: flex-end,
+    center: center,
+    stretch: stretch,
+);
+
+@each $key,
+$value in $flex-ais {
+    .ai-#{$key} {
+        align-items: $value;
+    }
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+// 定义margin·padding
+$spacing-types: (
+    m: margin,
+    p: padding
+);
+
+$spacing-directions: (
+    t: top,
+    b: bottom,
+    l: left,
+    r: right
+);
+
+$spacing-base-size: 1rem;
+
+$spacing-sizes: (
+    0: 1,
+    1: 0.25,
+    2: 0.5,
+    3: 1,
+    4: 1.5,
+    5: 3
+);
+
+@each $typeKey,
+$type in $spacing-types {
+
+    // 实际样式：.m .p
+    @each $sizeKey,
+    $size in $spacing-sizes {
+        .#{$typeKey}-#{$sizeKey} {
+            #{$type}: $size * $spacing-base-size
+        }
+    }
+
+    @each $sizeKey,
+    $size in $spacing-sizes {
+
+        // 实际样式：.mx-left   .mx-right
+        .#{$typeKey}x-#{$sizeKey} {
+            #{$type}-left: $size * $spacing-base-size;
+            #{$type}-right: $size * $spacing-base-size
+        }
+
+        // 实际样式：.my-left   .my-right
+        .#{$typeKey}y-#{$sizeKey} {
+            #{$type}-top: $size * $spacing-base-size;
+            #{$type}-bottom: $size * $spacing-base-size
+        }
+    }
+
+    @each $directionKey,
+    $direction in $spacing-directions {
+
+        @each $sizeKey,
+        $size in $spacing-sizes {
+
+            // 实际样式是：.mt-1
+            .#{$typeKey}#{$directionKey}-#{$sizeKey} {
+                #{$type}-#{$direction}: $size * $spacing-base-size
+            }
+        }
+    }
+}
+
+// 重置button按钮样式
+button {
+    border: none;
+}
+
+.btn {
+    border-radius: 0.125rem;
+    font-size: map-get($font-sizes, "sm");
+    padding: 0.4rem 0.5rem;
+}
+
+// nav
+.nav {
+    display: flex;
+    justify-content: space-around;
+
+    .nav-item {
+        padding-bottom: 0.2rem;
+        border-bottom: 3px solid transparent;
+
+        &.active {
+            color: map-get($colors , "primary");
+            border-bottom-color: map-get($colors, "primary");
+            font-weight: bold;
+        }
+    }
+
+    &.nav-inverse {
+        .nav-item {
+            color: map-get($colors , "white");
+
+            &.active {
+                border-bottom-color: map-get($colors, "white");
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+// 定义全局width,height
+.w-100 {
+    width: 100%;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+// 处理nav中的图标
+.sprite {
+    // background-image: url('~@/assets/images/login.jpg');
+    background: url("~@/assets/images/index1.png") no-repeat 0 0;
+    background-size: 23.4375rem;
+    display: inline-block;
+
+    &.sprite-news {
+        width: 1.875rem;
+        height: 1.25rem;
+        background-position: 41.316% 18.544%;
+    }
+
+    // 故事会图标
+    &.sprite-story {
+        width: 1.875rem;
+        height: 1.25rem;
+        background-position: 0 31.802%;
+    }
+
+    // 周边图标
+    &.sprite-around {
+        width: 1.875rem;
+        height: 1.25rem;
+        background-position: 0.26% 25.043%;
+    }
+
+    // 版本介绍图标
+    &.sprite-version {
+        width: 1.875rem;
+        height: 1.25rem;
+        background-position: 0.262% 18.544%;
+    }
+
+    // 收起图标
+    &.sprite-sq {
+        width: 0.625rem;
+        height: 0.625rem;
+        background-position: 65.306% 4.714%;
+    }
+}
